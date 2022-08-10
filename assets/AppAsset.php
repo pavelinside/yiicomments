@@ -24,13 +24,13 @@ class AppAsset extends AssetBundle
         'css/bootstrap.min.css',
         'css/fontawesome.min.css',
         'css/templatemo.css'
-
     ];
     public $js = [
         'js/popper.min.js',
         'js/bootstrap.min.js',
         'js/fontawesome_5ac93d4ca8.js',
-        'js/bootstrap4-rating-input.min.js'
+        'js/bootstrap4-rating-input.min.js',
+      'js/bootstrap-filestyle.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

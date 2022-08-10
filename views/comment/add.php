@@ -18,6 +18,22 @@ try {
     // log error
 }
 $js = <<<JS
+$(function(){
+  var fileSelector = '#comment-image';
+    $(fileSelector).parent().prepend(
+      '<span id="detachFile" title="Открепить файл" style="color:red;display:none;float: right;cursor: pointer;">&nbsp;X&nbsp;</span>'
+    );
+    $('#detachFile').click(function(){
+      $(fileSelector).val('').change();
+      $('#detachFile').css({display:'none'});
+    });
+    $(fileSelector).filestyle();
+    $(fileSelector).change(function(){
+        $('#detachFile').css({display: 'inline'});
+        return true;
+    });
+});
+
 $( "#comment-form" ).on('beforeSubmit', function() {
   const form = $(this);
   
@@ -31,13 +47,14 @@ $( "#comment-form" ).on('beforeSubmit', function() {
     );
   
   // send ajax
-  sendAjaxForm(form)
+  sendAjaxForm(document.getElementById('comment-form'))
     .then((data) => {
         $(btn).prop("disabled", false).html(oldHtml);
         if (data.success) {
           // данные прошли валидацию, сообщение было отправлено
           $('#response').html(data.message ? data.message : '');
           if(data.comments){
+            $("#commentMainContainer").show();
             $('#commentContainer').html(data.comments);
           }
           if(data && data.paginator){
@@ -58,6 +75,7 @@ $( "#comment-form" ).on('beforeSubmit', function() {
 	})
 	.catch((e) => {
       $(btn).prop("disabled", false).html(oldHtml);
+      console.log(e);
 	  alert(e.error);
     });
   
@@ -131,6 +149,12 @@ if (Yii::$app->session->hasFlash('comment-success')) {
   <?= $form->field($model, 'email')->input('email', ['value' => $email]); ?>
   <?= $form->field($model, 'comment')->textarea(['rows' => 5, 'value' => $comment]); ?>
   <?= $form->field($model, 'rating')->input('number', ['class'=>'rating', 'data-clearable'=>'remove', 'value' => $rating]); ?>
+  <?=
+    $form->field($model, 'image')->input('file', [
+    'class' => "filestyle", 'data-placeholder' => "Прикрепить изображение или текстовый файл", 'data-text'=>"Выбрать",
+      "accept"=>".jpg, .jpeg, .png, .gif, .txt"
+  ])->label('<span>Файл</span>&nbsp;<span id="detachFile" title="Открепить файл" style="color:red;display:none;">X</span>');
+  ?>
   <?= $form->field($model, 'advantage')->textarea(['rows' => 5, 'value' => $advantage]); ?>
   <?= $form->field($model, 'flaws')->textarea(['rows' => 5, 'value' => $flaws]); ?>
   <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary', 'id' => 'btnCommentSend']); ?>

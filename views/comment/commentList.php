@@ -39,6 +39,7 @@ function initSort(url){
     .done(function(data) {
       console.log(data);
       if(data && data.comments){
+        $("#commentMainContainer").show();
         $('#commentContainer').html(data.comments);
       }
       if(data && data.paginator){
@@ -58,9 +59,10 @@ $js .= " initSort('".$url."');";
 $js .= "$(function(){ refreshPaginationPages('".$commentSort."'); });";
 $this->registerJs($js, $this::POS_READY);
 
-if($comments){
+$display = $comments ? "block" : "none";
+
   ?>
-    <div class="container mt-5">
+    <div id="commentMainContainer" style="display: <?php echo $display; ?>;" class="container mt-5">
         <h3>Отзывы</h3>
 
         <table class="table table-striped">
@@ -79,11 +81,10 @@ if($comments){
         <table class="table table-striped">
         <tbody id="commentContainer">
   <?php
-}
 
 echo $comments;
 
-if($comments){
+
   ?>
     </tbody></table>
     <nav id="paginatorContainer" class="my-4">
@@ -93,5 +94,3 @@ if($comments){
     </nav>
 
     </div>
-  <?php
-}

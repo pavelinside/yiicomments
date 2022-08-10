@@ -4,17 +4,38 @@ namespace app\models;
 use yii\db\ActiveRecord;
 use yii\web\HttpException;
 use yii;
+use yii\imagine\Image;
+
+
 
 /**
+ * Таблица отзывов
+ *
+ * @property int $id Уникальный идентификатор
+ * @property int $productid ID товара
+ * @property string $name Автор отзыва
+ * @property id $emailid Email
+ * @property string $comment Отзыв
+ * @property int $rating Рейтинг от 1 до 5
+ * @property string $advantage Преимущества
+ * @property string $flaws Недостатки
+ * @property int $ip IP
+ * @property int $browserid Браузер
+ * @property string $created Дата создания
  *
  * @property-write string $sortParams
  * @property-read mixed $emailClass
  */
 class Comment extends ActiveRecord {
   public $email;
+  /**
+   * Вспомогательный атрибут для загрузки изображения товара
+   */
+  public $upload;
 
   protected string $sortField = 'created';
   protected int $sortDirection = SORT_DESC;
+  public static $imagePath = '@webroot/img/comment/';
 
   public function attributeLabels() {
     return [
@@ -22,6 +43,7 @@ class Comment extends ActiveRecord {
       'email' => 'E-mail',
       'comment' => 'Отзыв',
       'rating' => 'Рейтинг',
+      'image' => 'Файл',
       'advantage' => 'Преимущества',
       'flaws' => 'Недостатки'
     ];
@@ -42,6 +64,8 @@ class Comment extends ActiveRecord {
       ['name', 'string', 'max' => 100, 'tooLong' => 'Поле «Имя» должно быть длиной не более 100 символов'],
       ['email', 'string', 'max' => 250, 'tooLong' => 'Поле «Email» должно быть длиной не более 250 символов'],
       [['comment', 'advantage', 'flaws'], 'string', 'max' => 1000, 'tooLong' => 'Поле должно быть длиной не более 1000 символов'],
+      // file image, validator image
+      ['image', 'file', 'extensions' => 'png, jpg, gif, txt, jpeg']
     ];
   }
 
@@ -173,5 +197,64 @@ class Comment extends ActiveRecord {
       $this->sortDirection = SORT_DESC;
       break;
     }
+  }
+
+  /**
+   * Загружает файл изображения товара
+   */
+  public function uploadImage() {
+    if(!$this->upload){
+      return false;
+    }
+
+    $extension = $this->upload->extension;
+
+    // только если был выбран файл для загрузки
+    $name = md5(uniqid(rand(), true)) . '.' . $extension;
+    // сохраняем исходное изображение в директории source
+    $source = Yii::getAlias(static::$imagePath.'source/' . $name);
+
+    if(in_array($extension, ['jpg', 'jpeg', 'png', 'gif'])){
+      $path = $this->upload->tempName;
+
+      list($width, $height) = getimagesize($path);
+      if($width > 1000 || $height > 1000){
+        Image::resize($path, 1000, 1000)
+          ->save(Yii::getAlias($source), ['quality' => 95]);
+        //      Image::thumbnail($source, 1000, 1000);
+        //mime_content_type(resource|string $filename): string|false
+        return $name;
+      }
+    }
+    if ($this->upload->saveAs($source)) {
+      return $name;
+    }
+
+    return false;
+  }
+
+  /**
+   * Удаляет старое изображение при загрузке нового
+   */
+  public static function removeImage($name) {
+    if (empty($name)) {
+      return;
+    }
+    $source = Yii::getAlias(static::$imagePath.'source/' . $name);
+    if (is_file($source)) {
+      unlink($source);
+    }
+    $large = Yii::getAlias(static::$imagePath.'large/' . $name);
+    if (is_file($large)) {
+      unlink($large);
+    }
+  }
+
+  /**
+   * Удаляет изображение при удалении товара
+   */
+  public function afterDelete() {
+    parent::afterDelete();
+    self::removeImage($this->image);
   }
 }

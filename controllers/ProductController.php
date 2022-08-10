@@ -6,6 +6,7 @@ use app\models\Product;
 use yii\web\HttpException;
 use Yii;
 use yii\web\Response;
+use yii\web\UploadedFile;
 
 class ProductController extends AppController {
   public function __construct($id, $module, $config = []){
@@ -58,6 +59,14 @@ class ProductController extends AppController {
 
     // add comment form
     if ($model->load(Yii::$app->request->post())) {
+
+      // загружаем изображение и выполняем resize исходного изображения
+      $model->upload = UploadedFile::getInstance($model, 'image');
+      if ($name = $model->uploadImage()) { // если изображение было загружено
+        // сохраняем в БД имя файла изображения
+        $model->image = $name;
+      }
+
       if ($model->save()) {
         if (Yii::$app->request->isAjax) {
           $commentSort = $post['commentSort'] ?? $defaultSort;

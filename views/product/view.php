@@ -30,13 +30,10 @@ $this->title = $product->title_ru;
     </div>
 </div>
 
-
 <?php
 echo $commentList;
 ?>
 
-
 <?php
 echo $commentForm;
 ?>
-
