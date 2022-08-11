@@ -23,7 +23,10 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'hzgsz7iT6sLsXFSTkjCWlutlxO4M-QMF',
-            'baseUrl' => ''
+            'baseUrl' => '',
+            'parsers' => [
+              'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -31,6 +34,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            //'enableSession' => false
         ],
         'errorHandler' => [
             'errorAction' => 'app/error',
@@ -57,12 +61,16 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+              //'' => 'product/index',
               'product/<id:\d+>/comments/<page:\d+>/sort/<sort:\w+>' => 'product/view',
               'product/<id:\d+>/comments/<page:\d+>' => 'product/view',
               'product/<id:\d+>' => 'product/view',
+              'GET API/comment/<ip:([0-9]{1,3}[\.]){3}[0-9]{1,3}>' => 'comment/apicomment',
+              'GET,PUT API/comment/<id:\d+>' => 'comment/apicomment',
+              'GET,POST API/comment' => 'comment/apicomment',
+              'GET API/author' => 'comment/apiauthor',
             ],
         ],
-
     ],
     'params' => $params,
 ];
