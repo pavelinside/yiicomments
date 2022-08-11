@@ -41,6 +41,7 @@ function initSort(url){
       if(data && data.comments){
         $("#commentMainContainer").show();
         $('#commentContainer').html(data.comments);
+        $('input[class~="rating"]').rating();
       }
       if(data && data.paginator){
         $('#paginatorContainer').html(data.paginator);

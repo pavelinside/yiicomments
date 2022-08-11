@@ -56,6 +56,7 @@ $( "#comment-form" ).on('beforeSubmit', function() {
           if(data.comments){
             $("#commentMainContainer").show();
             $('#commentContainer').html(data.comments);
+            $('input[class~="rating"]').rating();
           }
           if(data && data.paginator){
             $('#paginatorContainer').html(data.paginator);
@@ -71,6 +72,8 @@ $( "#comment-form" ).on('beforeSubmit', function() {
           form[0].reset();
           // reset rating
           form.find('i[class~="fa-remove"]').click();
+        } else if(data && data.error){
+          $('#response').html(data.error);
         }
 	})
 	.catch((e) => {

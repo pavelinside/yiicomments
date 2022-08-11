@@ -5,8 +5,7 @@ use yii\db\ActiveRecord;
 use yii\web\HttpException;
 use yii;
 use yii\imagine\Image;
-
-
+use yii\web\UploadedFile;
 
 /**
  * Таблица отзывов
@@ -50,13 +49,12 @@ class Comment extends ActiveRecord {
   }
 
   public function rules() {
-    return [
+    $rules = [
       // удалить пробелы для полей name и email
       [['name', 'email'], 'trim'],
       ['productid', 'required', 'message' => 'Товар не выбран'],
       ['productid', 'integer'],
       ['name', 'required', 'message' => 'Поле «Имя» обязательно для заполнения'],
-      ['email', 'required', 'message' => 'Поле «Email» обязательно для заполнения'],
       ['email', 'email', 'message' => 'Поле «Ваш email» должно быть адресом почты'],
       ['comment', 'required', 'message' => 'Поле «Отзыв» обязательно для заполнения'],
       ['rating', 'required', 'message' => 'Поле «Рейтинг» обязательно для заполнения'],
@@ -67,6 +65,10 @@ class Comment extends ActiveRecord {
       // file image, validator image
       ['image', 'file', 'extensions' => 'png, jpg, gif, txt, jpeg']
     ];
+    if($this->isNewRecord){
+      $rules []= ['email', 'required', 'message' => 'Поле «Email» обязательно для заполнения'];
+    }
+    return $rules;
   }
 
   public static function tableName()  {
@@ -86,9 +88,13 @@ class Comment extends ActiveRecord {
       return false;
     }
 
+    // может, это где-то делается еще, хз
     if (!$this->validate()) {
-      $this->setFlashValidateErrors();
       return false;
+    }
+
+    if(!$this->productid){
+      throw new HttpException(500,"Товар не найден");
     }
 
     // check product
@@ -98,33 +104,48 @@ class Comment extends ActiveRecord {
     }
 
     // save email
-    $modelEmail = new Email();
-    try{
-      $emailID = $modelEmail->addByName($this->email);
-      $this->emailid = $emailID;
-    } catch(yii\db\Exception $e){
-      throw new HttpException(500,"Ошибка добавления отзыва");
-    }
-
-    // userAgent
-    $this->browserid = NULL;
-    $userAgent = yii::$app->getRequest()->getUserAgent();
-    if($userAgent){
-      $modelBrowser = new Browser();
+    if($this->isNewRecord || $this->email){
+      $modelEmail = new Email();
       try{
-        $browserID = $modelBrowser->addByName($userAgent);
-        $this->browserid = $browserID;
+        $emailID = $modelEmail->addByName($this->email);
+        $this->emailid = $emailID;
       } catch(yii\db\Exception $e){
-        throw new HttpException(500,"Ошибка добавления отзыва");
+        throw new HttpException(500,"Ошибка обработки email");
       }
     }
 
-    // get IP
-    $ip = yii::$app->getRequest()->getUserIP();
-    $this->ip = NULL;
-    if($ip){
-      // long2ip(int $ip): string|false
-      $this->ip = ip2long($ip);
+    // file
+    $this->upload = UploadedFile::getInstance($this, 'image');
+    if ($name = $this->uploadImage()) { // if file are loaded
+      if(!$this->isNewRecord && $this->image){
+        // TODO нужно удалять в afterSave(save может не сработать)
+        static::removeImage($this->image);
+      }
+      // save file name
+      $this->image = $name;
+    }
+
+    // userAgent
+    if($this->isNewRecord){
+      $this->browserid = NULL;
+      $userAgent = yii::$app->getRequest()->getUserAgent();
+      if($userAgent){
+        $modelBrowser = new Browser();
+        try{
+          $browserID = $modelBrowser->addByName($userAgent);
+          $this->browserid = $browserID;
+        } catch(yii\db\Exception $e){
+          throw new HttpException(500,"Ошибка добавления отзыва");
+        }
+      }
+
+      // get IP
+      $ip = yii::$app->getRequest()->getUserIP();
+      $this->ip = NULL;
+      if($ip){
+        // long2ip(int $ip): string|false
+        $this->ip = ip2long($ip);
+      }
     }
 
     return true;
@@ -149,7 +170,8 @@ class Comment extends ActiveRecord {
     //  'name' => ['Поле «Имя» обязательно для заполнения',],
     //  'email' => ['Поле «Email» обязательно для заполнения', 'Поле «Email» должно быть адресом почты']
     // ]
-    yii::$app->session->setFlash('comment-errors', $this->getErrors());
+    $errors = $this->getErrors();
+    yii::$app->session->setFlash('comment-errors', $errors);
   }
 
   /**
@@ -217,7 +239,7 @@ class Comment extends ActiveRecord {
     if(in_array($extension, ['jpg', 'jpeg', 'png', 'gif'])){
       $path = $this->upload->tempName;
 
-      list($width, $height) = getimagesize($path);
+      [$width, $height] = getimagesize($path);
       if($width > 1000 || $height > 1000){
         Image::resize($path, 1000, 1000)
           ->save(Yii::getAlias($source), ['quality' => 95]);
