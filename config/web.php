@@ -15,6 +15,13 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'modules' => [
+      'API' => [
+        'class' => 'app\modules\API\Module',
+        //'basePath' => '@app/modules/API',
+        // module settings
+      ],
+    ],
     'components' => [
         'formatter' => [
           //'dateFormat' => 'dd.MM.yyyy'
@@ -24,9 +31,9 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'hzgsz7iT6sLsXFSTkjCWlutlxO4M-QMF',
             'baseUrl' => '',
-            'parsers' => [
-              'application/json' => 'yii\web\JsonParser',
-            ]
+//            'parsers' => [
+//              'application/json' => 'yii\web\JsonParser',
+//            ]
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -58,18 +65,28 @@ $config = [
         'db' => $db,
 
         'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-              //'' => 'product/index',
-              'product/<id:\d+>/comments/<page:\d+>/sort/<sort:\w+>' => 'product/view',
-              'product/<id:\d+>/comments/<page:\d+>' => 'product/view',
-              'product/<id:\d+>' => 'product/view',
-              'GET API/comment/<ip:([0-9]{1,3}[\.]){3}[0-9]{1,3}>' => 'comment/apicomment',
-              'GET,PUT API/comment/<id:\d+>' => 'comment/apicomment',
-              'GET,POST API/comment' => 'comment/apicomment',
-              'GET API/author' => 'comment/apiauthor',
+          'enablePrettyUrl' => true,
+          'showScriptName' => false,
+          'enableStrictParsing' => true,
+
+          'rules' => [
+            '' => 'product/index',
+            'product/<id:\d+>/comments/<page:\d+>/sort/<sort:\w+>' => 'product/view',
+            'product/<id:\d+>/comments/<page:\d+>' => 'product/view',
+            'product/<id:\d+>' => 'product/view',
+//              'GET API/comment/<ip:([0-9]{1,3}[\.]){3}[0-9]{1,3}>' => 'comment/apicomment',
+//              'GET,PUT API/comment/<id:\d+>' => 'comment/apicomment',
+//              'GET,POST API/comment' => 'comment/apicomment',
+//              'GET API/author' => 'comment/apiauthor',
+            [
+              'class' => 'yii\rest\UrlRule',
+              'pluralize'=>false, //отключаем преобразование во множественную форму
+              'controller' => ['API/comment'],
+//              'extraPatterns' => [
+//                'GET, POST find' => 'find',
+//              ],
             ],
+          ],
         ],
     ],
     'params' => $params,
