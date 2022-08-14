@@ -21,6 +21,24 @@ class m220814_082849_user extends Migration {
       'email' => $this->string()->notNull()->unique(),
       'status' => $this->smallInteger()->notNull()->defaultValue(10)
     ], $tableOptions);
+
+    $this->insert('user', [
+      'id' => '1',
+      'username' => 'admin',
+      'auth_key' => 'test100key',
+      'password_hash' => '$2y$13$MN0EH8eXyvnLtYZA5T0pDugflzcaYYWpD7YRQsGIz4iNm8kiiq4B6', // admin
+      'password_reset_token' => 'admin',
+      'email' => 'superadmin@gmail.com'
+    ]);
+
+    $this->insert('user', [
+      'id' => '2',
+      'username' => 'demo',
+      'auth_key' => 'test101key',
+      'password_hash' => '$2y$13$rCejqslQ8c7olfs4TOz7hudK7aPbvYQP9hjIgT5y/Lqk.Cb8kSBDy', // demo
+      'password_reset_token' => 'demo',
+      'email' => 'demo@gmail.com'
+    ]);
   }
 
   public function down()  {

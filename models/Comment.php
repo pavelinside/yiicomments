@@ -28,13 +28,13 @@ use yii\web\UploadedFile;
 class Comment extends ActiveRecord {
   public $email;
   /**
-   * Вспомогательный атрибут для загрузки изображения товара
+   * Вспомогательный атрибут для загрузки файла
    */
   public $upload;
 
   protected string $sortField = 'created';
   protected int $sortDirection = SORT_DESC;
-  public static $imagePath = '@webroot/img/comment/';
+  public static string $imagePath = '@webroot/img/comment/';
 
   public function attributeLabels() {
     return [
@@ -62,8 +62,7 @@ class Comment extends ActiveRecord {
       ['name', 'string', 'max' => 100, 'tooLong' => 'Поле «Имя» должно быть длиной не более 100 символов'],
       ['email', 'string', 'max' => 250, 'tooLong' => 'Поле «Email» должно быть длиной не более 250 символов'],
       [['comment', 'advantage', 'flaws'], 'string', 'max' => 1000, 'tooLong' => 'Поле должно быть длиной не более 1000 символов'],
-      // file image, validator image
-      ['image', 'file', 'extensions' => 'png, jpg, gif, txt, jpeg']
+      ['image', 'file', 'extensions' => 'png, jpg, gif, jpeg, txt']
     ];
     if($this->isNewRecord){
       $rules []= ['email', 'required', 'message' => 'Поле «Email» обязательно для заполнения'];
@@ -75,9 +74,9 @@ class Comment extends ActiveRecord {
     return "comment";
   }
 
-//  public function getBrowser() {
-//    return $this->hasOne(Browser::class, ['id' => 'browserid']);
-//  }
+  public function getBrowser() {
+    return $this->hasOne(Browser::class, ['id' => 'browserid']);
+  }
 
   public function getEmailClass(){
     return $this->hasOne(Email::class, ['id' => 'emailid']);
@@ -200,6 +199,11 @@ class Comment extends ActiveRecord {
     return ['comments' => $comments, 'pages' => $pages];
   }
 
+  /**
+   * set sort direction
+   * @param string $commentSort
+   * @return void
+   */
   public function setSortParams(string $commentSort){
     switch ($commentSort){
     case "dateAsc":
@@ -256,7 +260,9 @@ class Comment extends ActiveRecord {
   }
 
   /**
-   * Удаляет старое изображение при загрузке нового
+   * удалить файл комментария
+   * @param $name
+   * @return void
    */
   public static function removeImage($name) {
     if (empty($name)) {
@@ -278,5 +284,30 @@ class Comment extends ActiveRecord {
   public function afterDelete() {
     parent::afterDelete();
     self::removeImage($this->image);
+  }
+
+  /**
+   * какие поля возвращать в ajax ответе
+   * @return string[]
+   */
+  public function fields()  {
+    $fields = parent::fields();
+    foreach(['productid', 'emailid', 'browserid'] as $field){
+      if(isset($fields[$field])){
+        unset($fields[$field]);
+      }
+    }
+    return $fields;
+  }
+
+  /**
+   * поля для expand
+   * @return string[]
+   */
+  public function extraFields(){
+    return [
+      'browser' => 'browser',
+      'email' => 'emailClass'
+    ];
   }
 }

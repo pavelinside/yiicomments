@@ -18,8 +18,6 @@ $config = [
     'modules' => [
       'API' => [
         'class' => 'app\modules\API\Module',
-        //'basePath' => '@app/modules/API',
-        // module settings
       ],
     ],
     'components' => [
@@ -78,13 +76,12 @@ $config = [
 //              'GET,PUT API/comment/<id:\d+>' => 'comment/apicomment',
 //              'GET,POST API/comment' => 'comment/apicomment',
 //              'GET API/author' => 'comment/apiauthor',
+
+            'API/auth' => 'API/site/login',
             [
               'class' => 'yii\rest\UrlRule',
-              'pluralize'=>false, //отключаем преобразование во множественную форму
+              'pluralize'=>false, //отключить преобразование во множественную форму
               'controller' => ['API/comment'],
-//              'extraPatterns' => [
-//                'GET, POST find' => 'find',
-//              ],
             ],
           ],
         ],
