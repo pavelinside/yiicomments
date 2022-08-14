@@ -1,2 +1,7 @@
+<Limit GET POST PUT DELETE>
+    Order allow,deny
+    Allow from all
+</Limit>
+
 RewriteEngine on
 RewriteRule (.*) /web/$1

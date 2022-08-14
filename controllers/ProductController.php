@@ -101,7 +101,7 @@ class ProductController extends AppController {
 
     // comments html
     $data = $getComments($commentSort);
-    $commentList = $this->renderFile('@app/views/comment/commentlist.php', [
+    $commentList = $this->renderFile('@app/views/comment/commentList.php', [
       'comments' => $data['comments'],
       'paginator' => $data['paginator'],
       'productid' => $product->id,
