@@ -72,12 +72,10 @@ $config = [
             'product/<id:\d+>/comments/<page:\d+>/sort/<sort:\w+>' => 'product/view',
             'product/<id:\d+>/comments/<page:\d+>' => 'product/view',
             'product/<id:\d+>' => 'product/view',
-//              'GET API/comment/<ip:([0-9]{1,3}[\.]){3}[0-9]{1,3}>' => 'comment/apicomment',
-//              'GET,PUT API/comment/<id:\d+>' => 'comment/apicomment',
-//              'GET,POST API/comment' => 'comment/apicomment',
-//              'GET API/author' => 'comment/apiauthor',
 
             'API/auth' => 'API/site/login',
+            'GET API/comment/<ip:([0-9]{1,3}[\.]){3}[0-9]{1,3}>' => 'API/comment/commentip',
+            'GET API/author' => 'API/comment/commentauthor',
             [
               'class' => 'yii\rest\UrlRule',
               'pluralize'=>false, //отключить преобразование во множественную форму
