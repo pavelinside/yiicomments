@@ -69,6 +69,9 @@ $config = [
 
           'rules' => [
             '' => 'product/index',
+            'product/about' => 'product/about',
+            'product/api' => 'product/api',
+            'product/contact' => 'product/contact',
             'product/<id:\d+>/comments/<page:\d+>/sort/<sort:\w+>' => 'product/view',
             'product/<id:\d+>/comments/<page:\d+>' => 'product/view',
             'product/<id:\d+>' => 'product/view',
