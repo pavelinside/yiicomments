@@ -23,7 +23,7 @@ AppAsset::register($this);
 
 <header>
 <!-- Start Top Nav -->
-<nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+<nav class="navbar navbar-expand-lg bg-dark navbar-light d-lg-block" id="templatemo_nav_top">
     <div class="container text-light">
         <div class="w-100 d-flex justify-content-between">
             <div>
@@ -44,32 +44,26 @@ AppAsset::register($this);
 <!-- Close Top Nav -->
 
 <!-- Header -->
-<nav class="navbar navbar-expand-lg navbar-light shadow">
-    <div class="container d-flex justify-content-between align-items-center">
-
-        <a class="navbar-brand text-success logo h1 align-self-center" href="<?php echo Url::to(['product/index']); ?>">
-            Блок отзывов
-        </a>
-
-        <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
-            <div class="flex-fill">
-                <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo Url::to(['product/about']); ?>">Про нас</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo Url::to(['product/contact']); ?>">Контакты</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo Url::to(['product/index']); ?>">Магазин</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo Url::to(['product/api']); ?>">API</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+<nav style="justify-content: center" class="navbar navbar-light bg-light ">
+<ul class="nav">
+    <li class="nav-item">
+    <a class="navbar-brand text-success logo h1 align-self-center" href="<?php echo Url::to(['product/index']); ?>">
+        Блок отзывов
+    </a>
+    </li>
+    <li class="nav-item align-self-center">
+        <a class="nav-link" href="<?php echo Url::to(['product/about']); ?>">Про нас</a>
+    </li>
+    <li class="nav-item align-self-center">
+        <a class="nav-link" href="<?php echo Url::to(['product/contact']); ?>">Контакты</a>
+    </li>
+    <li class="nav-item align-self-center">
+        <a class="nav-link" href="<?php echo Url::to(['product/index']); ?>">Магазин</a>
+    </li>
+    <li class="nav-item align-self-center">
+        <a class="nav-link" href="<?php echo Url::to(['product/api']); ?>">API</a>
+    </li>
+</ul>
 </nav>
 </header>
 <!-- Close Header -->
