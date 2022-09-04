@@ -76,6 +76,8 @@ $config = [
             'product/<id:\d+>/comments/<page:\d+>' => 'product/view',
             'product/<id:\d+>' => 'product/view',
 
+            'test/order' => 'test/order-date-plan',
+
             'API/auth' => 'API/site/login',
             'GET API/comment/<ip:([0-9]{1,3}[\.]){3}[0-9]{1,3}>' => 'API/comment/commentip',
             'GET API/author' => 'API/comment/commentauthor',
