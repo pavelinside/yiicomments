@@ -2,10 +2,10 @@
 /** @var string $content */
 /** @var yii\web\View $this */
 
-use app\assets\AppAsset;
+use app\assets\MainAsset;
 use yii\bootstrap4\Html;
 
-AppAsset::register($this);
+MainAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!doctype html>
@@ -17,12 +17,12 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-
 <body>
 <?php $this->beginBody() ?>
+
 <?php echo $content; ?>
+
 <?php $this->endBody() ?>
 </body>
-
 </html>
 <?php $this->endPage() ?>
