@@ -103,6 +103,16 @@ $config = [
             'cart/index' => 'cart/index',
             'cart/add' => 'cart/add',
             'cart/delete' => 'cart/delete',
+
+              '<alias:about>' => 'test/page', // about
+              'page/<alias>' => 'test/page',  // page/about page/test
+
+              'test/urls' => 'test/urls',
+              'blog/<alias:[-a-z]+>' => 'blog/view',    // blog/test
+              '<type:(archive|posts)>' => 'blog/index', // archive posts
+              '<type:(archive|posts)>/<order:(DESC|ASC)>' => 'blog/index', // posts/ASC
+              'sayhello/<name>' => 'blog/hello',        // sayhello
+
           ],
         ],
     ],

@@ -2,7 +2,12 @@
 
 namespace app\controllers;
 
-class TestController extends \yii\web\Controller {
+use Yii;
+use yii\helpers\Html;
+use yii\web\Controller;
+
+class TestController extends Controller
+{
     public function actionIndex()
     {
         return $this->renderContent(Html::tag('h2',
@@ -14,5 +19,10 @@ class TestController extends \yii\web\Controller {
         return $this->renderContent(Html::tag('h2',
             'Page is '. Html::encode($alias)
         ));
+    }
+
+    public function actionUrls()
+    {
+        return $this->render('urls');
     }
 }
