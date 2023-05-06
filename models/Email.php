@@ -9,6 +9,14 @@ class Email extends ActiveRecord {
     return "email";
   }
 
+    public function rules(): array
+    {
+        return [
+            [['name'], 'required'],
+            [['name'], 'string'],
+        ];
+    }
+
   public function addByName(string $name){
     $sql = 'INSERT INTO `email` (`name`) VALUES (:name) ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id)';
     yii::$app->db->createCommand($sql, [

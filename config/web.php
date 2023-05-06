@@ -113,6 +113,8 @@ $config = [
               '<type:(archive|posts)>/<order:(DESC|ASC)>' => 'blog/index', // posts/ASC
               'sayhello/<name>' => 'blog/hello',        // sayhello
 
+              'email/<action>' => 'email/<action>'
+
           ],
         ],
     ],
