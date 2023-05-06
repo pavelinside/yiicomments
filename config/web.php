@@ -1,5 +1,14 @@
 <?php
 
+use app\cart\storage\SessionStorage;
+Yii::$container->setSingleton(app\cart\ShoppingCart::class);
+Yii::$container->set(app\cart\storage\StorageInterface::class,
+    function() {
+        return new SessionStorage(Yii::$app->session,'primary-cart');
+    }
+);
+
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -16,9 +25,12 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'modules' => [
-      'API' => [
-        'class' => 'app\modules\API\Module',
-      ],
+        'API' => [
+            'class' => 'app\modules\API\Module',
+        ],
+        'algorithms' => [
+            'class' => 'app\modules\algorithms\Module',
+        ]
     ],
     'components' => [
         'formatter' => [
@@ -75,9 +87,6 @@ $config = [
             'product/<id:\d+>/comments/<page:\d+>/sort/<sort:\w+>' => 'product/view',
             'product/<id:\d+>/comments/<page:\d+>' => 'product/view',
             'product/<id:\d+>' => 'product/view',
-
-            'test/order' => 'test/order-date-plan',
-
             'API/auth' => 'API/site/login',
             'GET API/comment/<ip:([0-9]{1,3}[\.]){3}[0-9]{1,3}>' => 'API/comment/commentip',
             'GET API/author' => 'API/comment/commentauthor',
@@ -86,6 +95,14 @@ $config = [
               'pluralize'=>false, //отключить преобразование во множественную форму
               'controller' => ['API/comment'],
             ],
+            'algorithms' => 'algorithms/default/index',
+            'algorithms/euclid' => 'algorithms/default/euclid',
+            'algorithms/progression-geometric' => 'algorithms/default/progression-geometric',
+            'algorithms/progression-arithmetic' => 'algorithms/default/progression-arithmetic',
+
+            'cart/index' => 'cart/index',
+            'cart/add' => 'cart/add',
+            'cart/delete' => 'cart/delete',
           ],
         ],
     ],

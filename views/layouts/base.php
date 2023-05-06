@@ -63,6 +63,9 @@ AppAsset::register($this);
     <li class="nav-item align-self-center">
         <a class="nav-link" href="<?php echo Url::to(['product/api']); ?>">API</a>
     </li>
+    <li class="nav-item align-self-center">
+        <a class="nav-link" href="<?php echo Url::to(['/cart/index']); ?>">Корзина</a>
+    </li>
 </ul>
 </nav>
 </header>
