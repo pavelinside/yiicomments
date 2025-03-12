@@ -28,6 +28,9 @@ $config = [
         'API' => [
             'class' => 'app\modules\API\Module',
         ],
+        'online' => [
+            'class' => 'app\modules\online\Module',
+        ],
         'algorithms' => [
             'class' => 'app\modules\algorithms\Module',
         ]
@@ -100,12 +103,17 @@ $config = [
             'algorithms/progression-geometric' => 'algorithms/default/progression-geometric',
             'algorithms/progression-arithmetic' => 'algorithms/default/progression-arithmetic',
 
+              'online' => 'online/default/index',
+              'online/autoload' => 'online/default/autoload',
+              'online/login' => 'online/login/login',
+
             'cart/index' => 'cart/index',
             'cart/add' => 'cart/add',
             'cart/delete' => 'cart/delete',
 
-              '<alias:about>' => 'test/page', // about
-              'page/<alias>' => 'test/page',  // page/about page/test
+              '<alias:about>' => 'test/bage', // about
+              'page/<view:contact|index>' => 'test/page',
+              'page/<alias>' => 'test/bage',  // page/about page/test
 
               'test/urls' => 'test/urls',
               'blog/<alias:[-a-z]+>' => 'blog/view',    // blog/test

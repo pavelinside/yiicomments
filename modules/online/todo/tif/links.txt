@@ -1,0 +1,7 @@
+http://jslavrikvue.my/tif/tif.html
+
+https://git.ufrj.br/softwarelivre/concursos/blob/8c8da571456a7f56001f4cc5ab7a244de70d7334/library/Zend/Pdf/Resource/Image/Tiff.php	ZendPdf
+https://open-file.ru/detect#result																									detect filetype
+https://github.com/GPHemsley/tiff-js
+https://github.com/seikichi/tiff.js/tree/master
+https://github.com/image-js/tiff

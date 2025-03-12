@@ -1,0 +1,47 @@
+.menuflex{
+  border: 1px solid red;
+  display: inline-flex;
+  flex-flow: column wrap;
+  align-content: flex-start;
+
+/*
+~vertical-align: top;
+~justify-content: flex-start;
+~align-items: flex-start;
+~align-self: flex-start;
+*/
+
+  list-style: none;
+  padding: 1px;
+  margin: 0px;
+
+  font-size: 14px;
+  max-height: 700px;
+  width: 800px;
+}
+
+.menuflex li{
+  border: 1px solid #000;
+  border-radius: 8px;
+  margin: 1px 1px 0 0;
+  padding: 3px 5px;
+  text-align: center;
+  order: 1;
+  width: 200px;
+}
+
+.menuflex a{
+  white-space: nowrap;
+  text-align: left;
+  display: block;
+  margin: 3px 0 0 0;
+}
+
+.menuflex a:hover{
+  color: red;
+  cursor: pointer;
+}
+
+#misc{
+  order: 2;
+}
