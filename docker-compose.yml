@@ -1,4 +1,6 @@
-version: '2'
+# docker-compose run --rm php composer update --prefer-dist
+# docker-compose run --rm php composer install
+# docker-compose up -d
 services:
   php:
     image: yiisoftware/yii2-php:7.4-apache
@@ -7,3 +9,25 @@ services:
       - ./:/app:delegated
     ports:
       - '8000:80'
+    depends_on:
+      - db
+    networks:
+      - yiicomments-network
+
+  db:
+    image: mariadb:10.4
+    container_name: yiicomments-mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: 9a2W
+      MARIADB_DATABASE: yiicomments
+      MARIADB_USER: yiicomments
+      MARIADB_PASSWORD: qWe67nHfT83Yu
+    ports:
+      - "3306:3306"
+    networks:
+      - yiicomments-network
+
+networks:
+  yiicomments-network:
+    driver: bridge

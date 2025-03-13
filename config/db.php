@@ -2,7 +2,7 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=mariadb-10.4;dbname=yiicomments',
+    'dsn' => 'mysql:host=db;dbname=yiicomments',
     'username' => 'yiicomments',
     'password' => 'qWe67nHfT83Yu',
     'charset' => 'utf8',
