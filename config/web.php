@@ -31,6 +31,9 @@ $config = [
         'online' => [
             'class' => 'app\modules\online\Module',
         ],
+        'crud' => [
+            'class' => 'app\modules\crud\Module',
+        ],
         'algorithms' => [
             'class' => 'app\modules\algorithms\Module',
         ]
@@ -39,6 +42,15 @@ $config = [
         'formatter' => [
           //'dateFormat' => 'dd.MM.yyyy'
           'dateFormat' => 'php:d F Y'
+        ],
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/config/messages',
+                    'sourceLanguage' => 'en-US',
+                ],
+            ],
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -111,17 +123,9 @@ $config = [
             'cart/add' => 'cart/add',
             'cart/delete' => 'cart/delete',
 
-              '<alias:about>' => 'test/bage', // about
-              'page/<view:contact|index>' => 'test/page',
-              'page/<alias>' => 'test/bage',  // page/about page/test
-
-              'test/urls' => 'test/urls',
-              'blog/<alias:[-a-z]+>' => 'blog/view',    // blog/test
-              '<type:(archive|posts)>' => 'blog/index', // archive posts
-              '<type:(archive|posts)>/<order:(DESC|ASC)>' => 'blog/index', // posts/ASC
-              'sayhello/<name>' => 'blog/hello',        // sayhello
-
-              'email/<action>' => 'email/<action>'
+              'email/<action>' => 'email/<action>',
+              'product/<action:create|delete|index>' => 'product/<action>',
+              'urls' => 'product/urls'
 
           ],
         ],

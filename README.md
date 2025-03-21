@@ -6,6 +6,10 @@
     <br>
 </p>
 
+sudo chown -R www-data:www-data web/img/products
+sudo chmod -R 775 web/img/products
+
+
 Yii 2 Basic Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
 rapidly creating small projects.
 

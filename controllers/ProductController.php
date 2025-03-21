@@ -1,6 +1,8 @@
 <?php
 namespace app\controllers;
 
+use app\modules\crud\actions\CreateAction;
+//use app\modules\crud\actions\ViewAction;
 use app\models\Comment;
 use app\models\Product;
 use yii\web\HttpException;
@@ -8,9 +10,26 @@ use Yii;
 use yii\web\Response;
 
 class ProductController extends AppController {
-  public function __construct($id, $module, $config = []){
-    parent::__construct($id, $module, $config);
-  }
+    public function __construct($id, $module, $config = [])
+    {
+        parent::__construct($id, $module, $config);
+    }
+
+    public function actions()
+    {
+        return [
+            'create' => [
+                'class' => CreateAction::class,
+                'modelClass' => Product::class,
+                'fileAttributes' => ['image' => '@webroot/img/products'],
+            ],
+//            'view' => [
+//                'class' => ViewAction::class,
+//                'modelClass' => Product::class,
+//                'fileAttributes' => ['image' => '@web/img/products'],
+//            ],
+        ];
+    }
 
   /**
    * Displays product page.
@@ -137,5 +156,9 @@ class ProductController extends AppController {
 
   public function actionContact(){
     return $this->render('contact');
+  }
+
+  public function actionUrls(){
+      return $this->render('urls');
   }
 }

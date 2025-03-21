@@ -14,7 +14,7 @@ $this->title = $product->title_ru;
         <div class="col-sm-2">
             <div class="card">
                 <div class="card-body">
-                  <?php echo Html::img("@web/".$product->image, ['class' => "rounded-circle img-fluid border mx-auto d-block", 'style' => 'max-height:140px']); ?>
+                  <?php echo Html::img("@web/img/products/".$product->image, ['class' => "rounded-circle img-fluid border mx-auto d-block", 'style' => 'max-height:140px']); ?>
                 </div>
             </div>
         </div>

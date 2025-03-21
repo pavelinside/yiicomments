@@ -2,6 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\Email;
+use app\modules\crud\actions\CreateAction;
+use app\modules\crud\actions\DeleteAction;
+use app\modules\crud\actions\IndexAction;
+use app\modules\crud\actions\ViewAction;
 use Yii;
 use yii\helpers\Html;
 use yii\web\Controller;
@@ -15,20 +20,20 @@ class EmailController extends Controller
             'error' => 'yii\web\ErrorAction',
 
              'view' => [
-                'class' => 'app\actions\ViewAction',
-                'modelClass' => \app\models\Email::class,
+                'class' => ViewAction::class,
+                'modelClass' => Email::class,
             ],
             'create' => [
-                'class' => 'app\actions\CreateAction',
-                'modelClass' => \app\models\Email::class,
+                'class' => CreateAction::class,
+                'modelClass' => Email::class,
             ],
             'delete' => [
-                'class' => 'app\actions\DeleteAction',
-                'modelClass' => \app\models\Email::class,
+                'class' => DeleteAction::class,
+                'modelClass' => Email::class,
             ],
             'index' => [
-                'class' => 'app\actions\IndexAction',
-                'modelClass' => \app\models\Email::class,
+                'class' => IndexAction::class,
+                'modelClass' => Email::class,
                 'pageSize' => 6
             ],
         ];

@@ -1,0 +1,22 @@
+<?php
+return [
+    'Create' => 'Створити',
+    'Upload error' => 'Помилка завантаження файлу',
+    'Maximum file size is 2MB' => 'Максимальний розмір файлу 2MB',
+    'The file must be an image (JPG, PNG, GIF, JPEG)' => 'Файл має бути зображенням (JPG, PNG, GIF, JPEG)',
+    'Name' => 'Назва',
+    'Price' => 'Ціна',
+    'Image' => 'Зображення',
+    'Description' => 'Опис',
+    'Product' => 'Продукт',
+    'ID' => 'Ідентифікатор',
+    'Email' => 'Електронна пошта',
+    'This email is already taken.' => 'Цей email вже використовується.',
+    'Invalid email format.' => 'Неправильний формат email.',
+    'File upload error' => 'Помилка завантаження файлу',
+    'Image' => 'Зображення',
+    'Title' => 'Заголовок',
+    'Title_ru' => 'Заголовок (RU)',
+    'Price' => 'Ціна',
+    'Description' => 'Опис',
+];

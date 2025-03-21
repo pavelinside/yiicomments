@@ -1,5 +1,5 @@
 <?php
-namespace app\actions;
+namespace app\modules\crud\actions;
 
 use yii\base\Action;
 use yii\data\Pagination;
@@ -22,7 +22,7 @@ class IndexAction extends Action
         $models = $query->offset($pages->offset)
             ->limit($pages->limit)
             ->all();
-        return $this->controller->render('//crud/index', [
+        return $this->controller->render('@app/modules/crud/views/crud/index', [
             'pages' => $pages,
             'models' => $models
         ]);

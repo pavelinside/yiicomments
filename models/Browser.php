@@ -1,21 +1,28 @@
 <?php
+
 namespace app\models;
 
 use yii\db\ActiveRecord;
 use yii;
+use yii\db\Exception;
 
-class Browser extends ActiveRecord {
-  public static function tableName()  {
-    return "browser";
-  }
+class Browser extends ActiveRecord
+{
+    public static function tableName(): string
+    {
+        return "browser";
+    }
 
-  public function addByName(string $name){
-    $sql = 'INSERT INTO `browser` (`name`) VALUES (:name) ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id)';
-    yii::$app->db->createCommand($sql, [
-      ':name' => $name,
-    ])->execute();
+    /**
+     * @throws Exception
+     */
+    public function addByName(string $name): string
+    {
+        $sql = 'INSERT INTO `browser` (`name`) VALUES (:name) ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id)';
+        yii::$app->db->createCommand($sql, [
+            ':name' => $name,
+        ])->execute();
 
-    $id = yii::$app->db->getLastInsertID();
-    return $id;
-  }
+        return yii::$app->db->getLastInsertID();
+    }
 }

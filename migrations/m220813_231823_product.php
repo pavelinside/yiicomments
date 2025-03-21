@@ -27,7 +27,7 @@ class m220813_231823_product extends Migration {
         'title' => 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
         'title_ru' => 'Рюкзак',
         'price' => '109.95',
-        'image' => 'img/81fPKd-2AYL._AC_SL1500_.jpg',
+        'image' => '81fPKd-2AYL._AC_SL1500_.jpg',
         'description' => 'Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday'
       ]);
 
@@ -36,7 +36,7 @@ class m220813_231823_product extends Migration {
         'title' => 'Mens Casual Premium Slim Fit T-Shirts',
         'title_ru' => 'Футболка',
         'price' => '22.30',
-        'image' => 'img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg',
+        'image' => '71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg',
         'description' => 'Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.'
       ]);
 
@@ -45,7 +45,7 @@ class m220813_231823_product extends Migration {
         'title' => 'Mens Cotton Jacket',
         'title_ru' => 'Куртка',
         'price' => '55.99',
-        'image' => 'img/71li-ujtlUL._AC_UX679_.jpg',
+        'image' => '71li-ujtlUL._AC_UX679_.jpg',
         'description' => 'great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day.'
       ]);
     }
